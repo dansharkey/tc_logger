@@ -96,8 +96,9 @@ impl eframe::App for App {
                     match state {
                         State::Idle => {
                             if ui::action_button(ui, "▶  Start", ui::GREEN).clicked() {
-                                if let Some(port) = self.selected_port_name() {
-                                    self.capture.start(port, self.interval_ms);
+                                let port = self.selected_port_name().map(|s| s.to_string());
+                                if let Some(port) = port {
+                                    self.capture.start(&port, self.interval_ms);
                                     self.last_export = None;
                                 }
                             }
